@@ -49,13 +49,13 @@ public class Corner extends Tile {
         return properties;
     }
 
-    public static List<Society> get() throws IOException {
+    public static List<Corner> get() throws IOException {
         Properties properties = loadPropertiesFile();
-        List<Society> propertiesList = new ArrayList<>();
+        List<Corner> propertiesList = new ArrayList<>();
         for (String key : properties.stringPropertyNames()) {
             if (key.startsWith("corner_") && key.endsWith(".name")) {
                 String propertyKey = key.substring(0, key.lastIndexOf("."));
-                propertiesList.add(new Society(propertyKey, properties));
+                propertiesList.add(new Corner(propertyKey, properties));
             }
         }
         return propertiesList;

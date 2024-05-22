@@ -6,5 +6,5 @@
   "STATION_CARDS_PATH": "stations_it.properties",
   "SOCIETIES_CARDS_PATH": "societies_it.properties",
   "CORNERS_CARDS_PATH": "corners_it.properties",
-  "TAXES_CARDS_PATH": ""
+  "TAXES_CARDS_PATH": "taxes_it.properties"
 }

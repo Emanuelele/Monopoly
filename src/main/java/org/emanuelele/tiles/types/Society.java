@@ -23,7 +23,7 @@ public class Society extends Tile {
 
     public Society(String key, Properties properties) {
         super(properties.getProperty(key + ".name"), parseInt(properties.getProperty(key + ".position")), properties.getProperty(key + ".image"));
-        this.cost = Integer.parseInt(properties.getProperty(key + ".cost"));
+        this.cost = parseInt(properties.getProperty(key + ".cost"));
         this.isOwned = false;
         this.owner = null;
     }
@@ -80,7 +80,9 @@ public class Society extends Tile {
         for (String key : properties.stringPropertyNames()) {
             if (key.startsWith("society_") && key.endsWith(".name")) {
                 String societyKey = key.substring(0, key.lastIndexOf("."));
-                societyList.add(new Society(societyKey, properties));
+                Society society = new Society(societyKey, properties);
+                System.out.println(society.getCost());
+                societyList.add(society);
             }
         }
         return societyList;
