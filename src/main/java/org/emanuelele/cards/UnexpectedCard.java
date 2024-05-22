@@ -18,7 +18,7 @@ public class UnexpectedCard {
     private String image;
     private CardActionType action;
 
-    UnexpectedCard(String key, Properties properties) {
+    private UnexpectedCard(String key, Properties properties) {
         this.key = key;
         loadProperties(properties);
     }

@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.emanuelele.config.Config;
-import org.emanuelele.tiles.Property;
-import org.emanuelele.tiles.Station;
+import org.emanuelele.tiles.types.Station;
 import org.emanuelele.tiles.Tile;
 
 import java.util.ArrayList;

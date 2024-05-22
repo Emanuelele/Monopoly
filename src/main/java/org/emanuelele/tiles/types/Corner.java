@@ -1,7 +1,8 @@
-package org.emanuelele.tiles;
+package org.emanuelele.tiles.types;
 
 import org.emanuelele.config.Config;
 import org.emanuelele.player.Player;
+import org.emanuelele.tiles.Tile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class Corner extends Tile {
-    private final String image;
+import static java.lang.Integer.parseInt;
 
-    public Corner(String name, String image) {
-        super(name);
-        this.image = image;
+public class Corner extends Tile {
+
+    public Corner(String key, Properties properties) {
+        super(properties.getProperty(key + ".name"), parseInt(properties.getProperty(key + ".position")), properties.getProperty(key + ".image"));
     }
 
     public void onLand(Player player) {
@@ -39,9 +40,9 @@ public class Corner extends Tile {
     private static Properties loadPropertiesFile() throws IOException {
         Config config = new Config();
         Properties properties = new Properties();
-        try (InputStream input = Property.class.getClassLoader().getResourceAsStream(config.getString("PROPERTY_CARDS_PATH"))) {
+        try (InputStream input = Property.class.getClassLoader().getResourceAsStream(config.getString("CORNERS_CARDS_PATH"))) {
             if (input == null) {
-                throw new IOException("Sorry, unable to find " + config.getString("PROPERTY_CARDS_PATH"));
+                throw new IOException("Sorry, unable to find " + config.getString("CORNERS_CARDS_PATH"));
             }
             properties.load(input);
         }
@@ -52,7 +53,7 @@ public class Corner extends Tile {
         Properties properties = loadPropertiesFile();
         List<Society> propertiesList = new ArrayList<>();
         for (String key : properties.stringPropertyNames()) {
-            if (key.startsWith("property_") && key.endsWith(".name")) {
+            if (key.startsWith("corner_") && key.endsWith(".name")) {
                 String propertyKey = key.substring(0, key.lastIndexOf("."));
                 propertiesList.add(new Society(propertyKey, properties));
             }

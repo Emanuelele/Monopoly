@@ -1,7 +1,9 @@
-package org.emanuelele.tiles;
+package org.emanuelele.tiles.types;
 
+import lombok.Getter;
 import org.emanuelele.config.Config;
 import org.emanuelele.player.Player;
+import org.emanuelele.tiles.Tile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,16 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class Station extends Tile {
+import static java.lang.Integer.parseInt;
+
+@Getter
+public class Society extends Tile {
     private final int cost;
-    private final int baseRent;
+    private final int rent;
     private boolean isOwned;
     private Player owner;
 
-    public Station(String key, Properties properties) {
-        super(properties.getProperty(key + ".name"));
+    public Society(String key, Properties properties) {
+        super(properties.getProperty(key + ".name"), parseInt(properties.getProperty(key + ".position")), properties.getProperty(key + ".image"));
         this.cost = Integer.parseInt(properties.getProperty(key + ".cost"));
-        this.baseRent = Integer.parseInt(properties.getProperty(key + ".rent"));
+        this.rent = Integer.parseInt(properties.getProperty(key + ".rent"));
         this.isOwned = false;
         this.owner = null;
     }
@@ -27,7 +32,6 @@ public class Station extends Tile {
         this.owner = owner;
         this.isOwned = (owner != null);
     }
-
 
     public boolean purchase(Player player) {
         if (!isOwned && player.getMoney() >= cost) {
@@ -38,23 +42,18 @@ public class Station extends Tile {
         return false;
     }
 
-    public void payRent(Player player) {
+    public void payRent(Player player, int diceTotal) {
         if (isOwned && owner != player) {
-            int rentToPay = baseRent * owner.getNumberOfStationsOwned();
+            int rentToPay = rent * diceTotal;
             player.removeMoney(rentToPay);
             owner.addMoney(rentToPay);
         }
     }
 
-    public void reset() {
-        this.owner = null;
-        this.isOwned = false;
-    }
 
-    @Override
     public void onLand(Player player) {
         if (isOwned) {
-            payRent(player);
+            payRent(player, player.getLastDiceTotal());
         } else {
             this.purchase(player);
         }
@@ -63,24 +62,24 @@ public class Station extends Tile {
     private static Properties loadPropertiesFile() throws IOException {
         Config config = new Config();
         Properties properties = new Properties();
-        try (InputStream input = Property.class.getClassLoader().getResourceAsStream(config.getString("STATION_CARDS_PATH"))) {
+        try (InputStream input = Society.class.getClassLoader().getResourceAsStream(config.getString("SOCIETIES_CARDS_PATH"))) {
             if (input == null) {
-                throw new IOException("Sorry, unable to find " + config.getString("STATION_CARDS_PATH"));
+                throw new IOException("Sorry, unable to find " + config.getString("SOCIETIES_CARDS_PATH"));
             }
             properties.load(input);
         }
         return properties;
     }
 
-    public static List<Station> get() throws IOException {
+    public static List<Society> get() throws IOException {
         Properties properties = loadPropertiesFile();
-        List<Station> propertiesList = new ArrayList<>();
+        List<Society> societyList = new ArrayList<>();
         for (String key : properties.stringPropertyNames()) {
-            if (key.startsWith("property_") && key.endsWith(".name")) {
-                String propertyKey = key.substring(0, key.lastIndexOf("."));
-                propertiesList.add(new Station(propertyKey, properties));
+            if (key.startsWith("society_") && key.endsWith(".name")) {
+                String societyKey = key.substring(0, key.lastIndexOf("."));
+                societyList.add(new Society(societyKey, properties));
             }
         }
-        return propertiesList;
+        return societyList;
     }
 }

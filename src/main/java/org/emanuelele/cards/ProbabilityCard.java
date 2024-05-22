@@ -18,7 +18,7 @@ public class ProbabilityCard {
     private CardActionType action;
 
 
-    ProbabilityCard(String key, Properties properties) {
+    private ProbabilityCard(String key, Properties properties) {
         this.key = key;
         loadProperties(properties);
     }
@@ -34,9 +34,8 @@ public class ProbabilityCard {
         Config config = new Config();
         Properties properties = new Properties();
         try (InputStream input = ProbabilityCard.class.getClassLoader().getResourceAsStream(config.getString("PROBABILITY_CARDS_PATH"))) {
-            if (input == null) {
+            if (input == null)
                 throw new IOException("Sorry, unable to find " + config.getString("PROBABILITY_CARDS_PATH"));
-            }
             properties.load(input);
         }
         return properties;

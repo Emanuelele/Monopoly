@@ -1,14 +1,17 @@
-package org.emanuelele.tiles;
+package org.emanuelele.tiles.types;
 
 import lombok.Getter;
 import org.emanuelele.config.Config;
 import org.emanuelele.player.Player;
+import org.emanuelele.tiles.Tile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import static java.lang.Integer.parseInt;
 
 @Getter
 public class Property extends Tile {
@@ -27,17 +30,17 @@ public class Property extends Tile {
     private int houses;
     private boolean hasHotel;
 
-    public Property(String key, Properties properties) {
-        super(properties.getProperty(key + ".name"));
-        this.cost = Integer.parseInt(properties.getProperty(key + ".cost"));
-        this.rent = Integer.parseInt(properties.getProperty(key + ".rent"));
-        this.rentWith1House = Integer.parseInt(properties.getProperty(key + ".rent_with_1_house"));
-        this.rentWith2Houses = Integer.parseInt(properties.getProperty(key + ".rent_with_2_houses"));
-        this.rentWith3Houses = Integer.parseInt(properties.getProperty(key + ".rent_with_3_houses"));
-        this.rentWith4Houses = Integer.parseInt(properties.getProperty(key + ".rent_with_4_houses"));
-        this.rentWithHotel = Integer.parseInt(properties.getProperty(key + ".rent_with_hotel"));
-        this.houseCost = Integer.parseInt(properties.getProperty(key + ".house_cost"));
-        this.hotelCost = Integer.parseInt(properties.getProperty(key + ".hotel_cost"));
+    private Property(String key, Properties properties) {
+        super(properties.getProperty(key + ".name"), parseInt(properties.getProperty(key + ".position")), properties.getProperty(key + ".image"));
+        this.cost = parseInt(properties.getProperty(key + ".cost"));
+        this.rent = parseInt(properties.getProperty(key + ".rent"));
+        this.rentWith1House = parseInt(properties.getProperty(key + ".rent_with_1_house"));
+        this.rentWith2Houses = parseInt(properties.getProperty(key + ".rent_with_2_houses"));
+        this.rentWith3Houses = parseInt(properties.getProperty(key + ".rent_with_3_houses"));
+        this.rentWith4Houses = parseInt(properties.getProperty(key + ".rent_with_4_houses"));
+        this.rentWithHotel = parseInt(properties.getProperty(key + ".rent_with_hotel"));
+        this.houseCost = parseInt(properties.getProperty(key + ".house_cost"));
+        this.hotelCost = parseInt(properties.getProperty(key + ".hotel_cost"));
         this.color = properties.getProperty(key + ".color");
         this.isOwned = false;
         this.owner = null;
@@ -53,7 +56,7 @@ public class Property extends Tile {
     public boolean purchase(Player player) {
         if (!isOwned && player.getMoney() >= cost) {
             player.removeMoney(cost);
-            setOwner(player);
+            this.setOwner(player);
             return true;
         }
         return false;
@@ -75,11 +78,11 @@ public class Property extends Tile {
 
     @Override
     public void onLand(Player player) {
-        if (isOwned) {
-            payRent(player);
-        } else {
+        if (isOwned)
+            this.payRent(player);
+        else
             this.purchase(player);
-        }
+
     }
 
     private static Properties loadPropertiesFile() throws IOException {
