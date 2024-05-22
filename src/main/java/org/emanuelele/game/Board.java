@@ -40,15 +40,12 @@ public class Board {
 
     private void sortTiles() {
         Collections.sort(tiles, (tile1, tile2) -> {
-            if (tile1 instanceof Property && tile2 instanceof Property) {
+            if (tile1 instanceof Property && tile2 instanceof Property)
                 return ((Property) tile1).getPosition() - ((Property) tile2).getPosition();
-            }
-            if (tile1 instanceof Station && tile2 instanceof Station) {
+            if (tile1 instanceof Station && tile2 instanceof Station)
                 return ((Station) tile1).getPosition() - ((Station) tile2).getPosition();
-            }
-            if (tile1 instanceof Society && tile2 instanceof Society) {
+            if (tile1 instanceof Society && tile2 instanceof Society)
                 return ((Society) tile1).getPosition() - ((Society) tile2).getPosition();
-            }
             return 0;
         });
     }
