@@ -16,14 +16,14 @@ import static java.lang.Integer.parseInt;
 @Getter
 public class Society extends Tile {
     private final int cost;
-    private final int rent;
+    private final int lowRent = 4;
+    private final int highRent = 10;
     private boolean isOwned;
     private Player owner;
 
     public Society(String key, Properties properties) {
         super(properties.getProperty(key + ".name"), parseInt(properties.getProperty(key + ".position")), properties.getProperty(key + ".image"));
         this.cost = Integer.parseInt(properties.getProperty(key + ".cost"));
-        this.rent = Integer.parseInt(properties.getProperty(key + ".rent"));
         this.isOwned = false;
         this.owner = null;
     }
@@ -42,14 +42,17 @@ public class Society extends Tile {
         return false;
     }
 
+    private int getRent() {
+        return owner.getNumberOfSocietiesOwned() == 1 ? lowRent : highRent;
+    }
+
     public void payRent(Player player, int diceTotal) {
         if (isOwned && owner != player) {
-            int rentToPay = rent * diceTotal;
+            int rentToPay = this.getRent() * diceTotal;
             player.removeMoney(rentToPay);
             owner.addMoney(rentToPay);
         }
     }
-
 
     public void onLand(Player player) {
         if (isOwned) {

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.emanuelele.config.Config;
+import org.emanuelele.tiles.types.Society;
 import org.emanuelele.tiles.types.Station;
 import org.emanuelele.tiles.Tile;
 
@@ -63,6 +64,16 @@ public class Player {
         int count = 0;
         for (Tile tile : propertiesOwned) {
             if (tile instanceof Station) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getNumberOfSocietiesOwned() {
+        int count = 0;
+        for (Tile tile : propertiesOwned) {
+            if (tile instanceof Society) {
                 count++;
             }
         }
