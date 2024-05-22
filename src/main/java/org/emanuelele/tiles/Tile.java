@@ -16,4 +16,5 @@ public abstract class Tile {
     }
 
     public abstract void onLand(Player player);
+    public abstract String toString();
 }

@@ -49,4 +49,9 @@ public class Tax extends Tile {
     public void onLand(Player player){
 
     }
+
+    @Override
+    public String toString() {
+        return "Tax " + getName();
+    }
 }

@@ -60,4 +60,9 @@ public class Corner extends Tile {
         }
         return propertiesList;
     }
+
+    @Override
+    public String toString() {
+        return "Corner " + getName();
+    }
 }

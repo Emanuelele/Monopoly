@@ -1,5 +1,6 @@
 package org.emanuelele.game;
 
+import lombok.Getter;
 import org.emanuelele.decks.ProbabilityCardDeck;
 import org.emanuelele.decks.UnexpectedCardDeck;
 import org.emanuelele.tiles.*;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Getter
 public class Board {
     private final List<Tile> tiles;
     private final ProbabilityCardDeck probabilityCards;

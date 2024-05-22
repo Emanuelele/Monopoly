@@ -86,4 +86,9 @@ public class Station extends Tile {
         }
         return propertiesList;
     }
+
+    @Override
+    public String toString() {
+        return "Station " + getName();
+    }
 }

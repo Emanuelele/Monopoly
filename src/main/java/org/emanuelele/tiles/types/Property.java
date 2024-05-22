@@ -108,4 +108,9 @@ public class Property extends Tile {
         }
         return propertiesList;
     }
+
+    @Override
+    public String toString() {
+        return "Property " + getName();
+    }
 }

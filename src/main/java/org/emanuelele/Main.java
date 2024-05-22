@@ -9,7 +9,11 @@ import org.emanuelele.cards.ProbabilityCard;
 import org.emanuelele.cards.actions.CardActionType;
 import org.emanuelele.decks.ProbabilityCardDeck;
 import org.emanuelele.decks.UnexpectedCardDeck;
+import org.emanuelele.game.Board;
 import org.emanuelele.player.Player;
+import org.emanuelele.tiles.Tile;
+
+import java.util.List;
 
 public class Main extends Application {
     public void start(Stage primaryStage) {
@@ -29,23 +33,10 @@ public class Main extends Application {
     }
     public static void main(String[] args) {
         //launch(args);
-        ProbabilityCardDeck adeck = new ProbabilityCardDeck();
-        //UnexpectedCardDeck udeck = new UnexpectedCardDeck();
-        Player player = new Player("asd");
-        for (int i = 0; i <18; i ++) {
-            ProbabilityCard card = adeck.drawCard();
-            System.out.println(card.getDescription());
-            card.getAction().execute(player);
-            //System.out.println(cardAction.get);
-            System.out.println(player.toString());
+        Board board = new Board();
+        List<Tile> tiles = board.getTiles();
+        for(Tile tile : tiles) {
+            System.out.println(tile.getName());
         }
-        /*player.setCurrentPosition(1);
-        int roll;
-        System.out.println(roll = -3);
-        player.setCurrentPosition(player.getCurrentPosition() + roll);
-        System.out.println(player.getCurrentPosition());*/
-
-
-
     }
 }

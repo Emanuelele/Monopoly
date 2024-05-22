@@ -85,4 +85,9 @@ public class Society extends Tile {
         }
         return societyList;
     }
+
+    @Override
+    public String toString() {
+        return "Property " + getName();
+    }
 }
