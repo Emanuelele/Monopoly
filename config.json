@@ -1,0 +1,10 @@
+{
+  "INITIAL_MONEY": 1500,
+  "PROBABILITY_CARDS_PATH": "probability_cards_it.properties",
+  "UNEXPECTED_CARDS_PATH": "unexpected_cards_it.properties",
+  "PROPERTY_CARDS_PATH": "properties_it.properties",
+  "STATION_CARDS_PATH": "stations_it.properties",
+  "SOCIETIES_CARDS_PATH": "societies_it.properties",
+  "CORNERS_CARDS_PATH": "societies_it.properties",
+  "TAXES_CARDS_PATH": "societies_it.properties"
+}
