@@ -10,9 +10,11 @@ import org.emanuelele.cards.actions.CardActionType;
 import org.emanuelele.decks.ProbabilityCardDeck;
 import org.emanuelele.decks.UnexpectedCardDeck;
 import org.emanuelele.game.Board;
+import org.emanuelele.game.Game;
 import org.emanuelele.player.Player;
 import org.emanuelele.tiles.Tile;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application {
@@ -32,11 +34,26 @@ public class Main extends Application {
         primaryStage.show();
     }
     public static void main(String[] args) {
-        //launch(args);
-        Board board = new Board();
-        List<Tile> tiles = board.getTiles();
-        for(Tile tile : tiles) {
-            System.out.println(tile.getName());
+        // Creiamo alcuni giocatori
+        Player player1 = new Player("Alice");
+        Player player2 = new Player("Bob");
+        Player player3 = new Player("Charlie");
+
+        // Mettiamo i giocatori in una lista
+        List<Player> players = Arrays.asList(player1, player2, player3);
+
+        // Inizializziamo il gioco con i giocatori
+        Game game = new Game(players);
+
+        // Eseguiamo alcuni round
+        for (int i = 0; i < 150; i++) {
+            System.out.println("Round " + (i + 1));
+            game.PlayRound();
+            // Stampa lo stato dei giocatori
+            for (Player player : players) {
+                System.out.println(player);
+            }
+            System.out.println();
         }
     }
 }

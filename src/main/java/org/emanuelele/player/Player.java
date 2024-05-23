@@ -44,7 +44,7 @@ public class Player {
 
     public int rollDice() {
         Random random = new Random();
-        return this.lastDiceTotal = random.nextInt(1,6);
+        return this.lastDiceTotal = random.nextInt(6) + 1;
     }
 
     public void setCurrentPosition(int position, boolean canPassThroughGo) {
